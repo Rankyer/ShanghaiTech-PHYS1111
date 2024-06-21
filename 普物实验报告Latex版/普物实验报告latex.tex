@@ -1,0 +1,1148 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{ctex}
+\usepackage{xcolor}
+
+\usepgfplotslibrary{fillbetween} 
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Lab Report}
+\newcommand{\hmwkClass}{General Physics}
+\newcommand{\hmwkDueDate}{Nov 19, 2023}
+\newcommand{\hmwkAuthorName}{Runkang Yang}
+\newcommand{\hmwkAuthorID}{2022533080}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+%====================================================
+\begin{homeworkProblem}[1]
+
+\begin{enumerate}
+    % inline
+    \item 
+{\Large \textbf{\textcolor{red}{计算公式}}}
+
+\vspace{\baselineskip}
+
+1.算术平均值\quad 
+\textcolor{purple}{
+$$\bar{N} =\frac{\sum_{i=1}^nN_i}{n}$$
+}
+2.测量值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_N=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n-1}}$$
+}
+3.平均值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_{\bar{N}}=\frac{\sigma_N}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n(n-1)}}$$
+}
+4.粗差的剔除\quad 拉依达准则 \quad 
+\textcolor{purple}{
+$$\left| \Delta N_i \right|<3\sigma_N$$
+}
+5.不确定度\quad 
+\textcolor{purple}{
+$$U=\sqrt{\Delta_A^2+\Delta_B^2}$$
+}
+
+\vspace{\baselineskip}
+\textbf{\textcolor{blue}{Step1：计算根据测得的小球直径计算出体积，进而利用$\rho=\frac{M}{V}$求出小球密度}}
+
+\textbf{\textcolor{yellow!80!black}{\large 1号小球}}\\
+小球质量：3.19$g$\\
+小球体积: [0.604, 0.605, 0.605, 0.605, 0.605, 0.605]\\
+小球密度: [5.279, 5.276, 5.273, 5.275, 5.276, 5.273]\\
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{6}(5.279+5.276+5.273+5.275+5.276+5.273)=5.275 \\
+\sigma_N&=0.0023 \quad \sigma_{\bar{N}}=0.00092 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.0024
+\end{align*}
+利用定义求得1号小球的密度的平均测量值为
+\textcolor{green!70!black}{
+$$
+\rho_1=(\rho \pm U)=(5.275\pm 0.0024) \, \text{g/cm}^3
+$$
+}
+\textbf{\textcolor{yellow!80!black}{\large 2号小球}}\\
+小球质量：1.05$g$\\
+小球体积: [0.261, 0.261, 0.261, 0.261, 0.261, 0.26]\\
+小球密度: [4.024, 4.03, 4.027, 4.029, 4.027, 4.032]\\
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{6}(4.024+4.03+4.027+4.029+4.027+4.032)=4.028 \\
+\sigma_N&=0.0027 \quad \sigma_{\bar{N}}=0.0011 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.0029
+\end{align*}
+利用定义求得2号小球的密度的平均测量值为
+\textcolor{green!70!black}{
+$$
+\rho_2=(\rho \pm U)=(4.028\pm 0.0029)g/cm^3
+$$}
+\textbf{\textcolor{yellow!80!black}{\large 3号小球}}\\
+小球质量：0.88$g$\\
+小球体积: [0.261, 0.262, 0.261, 0.261, 0.261, 0.261]\\
+小球密度: [3.369, 3.364, 3.368, 3.369, 3.37, 3.369]\\
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{6}(3.369+3.364+3.368+3.369+3.37+3.369)=3.368 \\
+\sigma_N&=0.0021 \quad \sigma_{\bar{N}}=0.00087 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.0022
+\end{align*}
+利用定义求得3号小球的密度的平均测量值为
+\textcolor{green!70!black}{
+$$
+\rho_3=(\rho \pm U)=(3.368\pm 0.0022)g/cm^3
+$$}
+
+\vspace{\baselineskip}
+\textbf{\textcolor{blue}{Step2：利用流体静力称衡法得出的小球的密度}}
+
+\textbf{\textcolor{yellow!80!black}{\large 1号小球}}\\
+六组数据密度的测量值分别为\quad [7.25, 4.833, 5.596, 5.907, 5.596, 5.23]
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{6}(7.25+4.833+5.596+5.907+5.596+5.23)=5.735 \\
+\sigma_N&=0.828 \quad \sigma_{\bar{N}}=0.338 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.870
+\end{align*}
+求得1号小球的密度的平均测量值为
+\textcolor{green!70!black}{
+$$
+\rho_1=(\rho \pm U)=(5.735\pm 0.870)g/cm^3
+$$}
+
+\textbf{\textcolor{yellow!80!black}{\large 2号小球}}\\
+六组数据密度的测量值分别为\quad [4.038, 4.2, 4.2, 3.889, 4.038, 4.038]
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{6}(4.038+4.2+4.2+3.889+4.038+4.038)=4.067 \\
+\sigma_N&=0.118 \quad \sigma_{\bar{N}}=0.048 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.124
+\end{align*}
+求得2号小球的密度的平均测量值为
+\textcolor{green!70!black}{
+$$
+\rho_1=(\rho \pm U)=(4.067\pm 0.124)g/cm^3
+$$}
+\textbf{\textcolor{yellow!80!black}{\large 3号小球}}\\
+六组数据密度的测量值分别为\quad [3.52, 3.52, 3.385, 3.385, 3.52, 3.385]
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{6}(3.52+3.52+3.385+3.385+3.52+3.385)=3.453 \\
+\sigma_N&=0.074 \quad \sigma_{\bar{N}}=0.030 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.078
+\end{align*}
+求得3号小球的密度的平均测量值为
+\textcolor{green!70!black}{
+$$
+\rho_1=(\rho \pm U)=(3.453\pm 0.078)g/cm^3
+$$}
+$$
+\frac{2^{h+1}-1}{2^h}=2 \times \frac{2^h}{2^h}-\frac{1}{2^h}=2-0=2
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+\end{homeworkProblem}
+%==========================================================换页==============================
+\clearpage
+\begin{homeworkProblem}[2]
+
+\begin{enumerate}
+	% alignment
+	\item
+
+{\Large \textbf{\textcolor{red}{计算公式}}}
+
+\vspace{\baselineskip}
+
+1.算术平均值\quad 
+\textcolor{purple}{
+$$\bar{N} =\frac{\sum_{i=1}^nN_i}{n}$$
+}
+2.测量值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_N=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n-1}}$$
+}
+3.平均值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_{\bar{N}}=\frac{\sigma_N}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n(n-1)}}$$
+}
+4.粗差的剔除\quad 拉依达准则 \quad 
+\textcolor{purple}{
+$$\left| \Delta N_i \right|<3\sigma_N$$
+}
+5.不确定度\quad 
+\textcolor{purple}{
+$$U=\sqrt{\Delta_A^2+\Delta_B^2}$$
+}
+
+\vspace{\baselineskip}
+\large \textbf{\textcolor{blue}{Part1：用新型焦利秤测定弹簧的劲度系数K}}\\
+
+\textcolor{green!70!black}{①通过添加砝码作出的F-Δy图像如下}\\
+
+
+
+斜率$$K=0.1823g/mm$$结合g=9.794N/kg测得的弹簧的劲度系数为$$K=1.785N/m$$
+\textcolor{green!70!black}{②通过减少砝码作出的F-Δy图像如下}
+
+
+斜率$$K=0.1796g/mm$$结合g=9.794N/kg测得的弹簧的劲度系数为$$K=1.759N/m$$
+
+
+\large \textbf{\textcolor{blue}{Part2：测量弹簧简谐振动周期，计算得出弹簧的劲度系数K}}
+
+铁砝码质量：[21.50,21.48,21.48,21.47,21.46]
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{5}(21.50+21.48+21.48+21.47+21.46)=21.48 \\
+\sigma_N&=0.0148 \quad \sigma_{\bar{N}}=0.066 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.02
+\end{align*}
+\quad 求得铁砝码质量的平均测量值为
+\textcolor{green!70!black}{
+$$
+M=(M \pm U)=(21.48\pm 0.02)g
+$$}
+弹簧质量：[13.60,13.58,13.54,13.54,13.56]
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{5}(13.60+13.58+13.54+13.54+13.56)=13.56 \\
+\sigma_N&=0.0260 \quad \sigma_{\bar{N}}=0.012 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.03
+\end{align*}
+\quad 求得弹簧质量的平均测量值为
+\textcolor{green!70!black}{
+$$
+M_0=(M_0 \pm U)=(13.56\pm 0.03)g
+$$}
+10T：[7.592,7.586,7.602,7.594,7.500,7.590,7.590,7.586,7.592,7.593]\\
+T：[0.7592,0.7586,0.7602,0.7594,0.750,0.759,0.759,0.7586,0.7592,0.7593]
+\begin{align*}  % 可以使用 align 代替 align* 来显示行号
+\bar{N}&=\frac{1}{10}(0.7592+0.7586+0.7602+0.7594+0.750+0.759+0.759+0.7586+0.7592+0.7593)\\
+&=0.758 \\
+\sigma_N&=0.0029 \quad \sigma_{\bar{N}}=0.00092 \quad U=\frac{t_0.95}{\sqrt{n}}\sigma_N=0.010
+\end{align*}
+\quad 求得T的平均测量值为
+\textcolor{green!70!black}{
+$$
+T=(T \pm U)=(0.758\pm 0.010)s
+$$}
+结合公式$$T=2\pi \sqrt{\frac{M+PM_0}{K}}$$可得$$K=\frac{(4\pi^2)(M+PM_0)}{T^2}$$将$$p=\frac{1}{3}$$带入并进行单位转换可得$$K=1.786N/m$$
+
+
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+%==========================================================换页==============================
+\clearpage
+\begin{homeworkProblem}[3]
+
+\begin{enumerate}
+	% alignment
+	\item
+
+{\Large \textbf{\textcolor{red}{计算公式}}}
+
+\vspace{\baselineskip}
+
+1.算术平均值\quad 
+\textcolor{purple}{
+$$\bar{N} =\frac{\sum_{i=1}^nN_i}{n}$$
+}
+2.测量值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_N=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n-1}}$$
+}
+3.平均值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_{\bar{N}}=\frac{\sigma_N}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n(n-1)}}$$
+}
+4.粗差的剔除\quad 拉依达准则 \quad 
+\textcolor{purple}{
+$$\left| \Delta N_i \right|<3\sigma_N$$
+}
+5.不确定度\quad 
+\textcolor{purple}{
+$$U=\sqrt{\Delta_A^2+\Delta_B^2}$$
+}
+
+\vspace{\baselineskip}
+\large \textbf{\textcolor{blue}{Part1：小球直径d}}\\
+小球直径：[1.030,1.033,1.029,1.032,1.030]\quad 单位：mm
+$$
+\bar{N}=\frac{1}{5}(1.030+1.033+1.029+1.032+1.030)=1.031
+$$
+$$
+\sigma_N=0.0016 \quad \sigma_{\bar{N}}=0.00073 \quad \Delta A=0.0019 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.010
+$$
+\quad 求得小球直径的平均测量值为
+\textcolor{green!70!black}{
+$$
+d=(d \pm U)=(1.031\pm 0.010)mm
+$$}
+%\textcolor{green!70!black}{①通过添加砝码作出的F-Δy图像如下}\\
+\large \textbf{\textcolor{blue}{Part2：v0的测定}}\\
+\textcolor{blue!50!white}{19°C \quad t:[29.15,29.12,29.12,29.26,29.02]}
+$$
+\bar{N}=\frac{1}{5}(29.15+29.12+29.12+29.26+29.02)=29.13
+$$
+$$
+\sigma_N=0.086 \quad \sigma_{\bar{N}}=0.038 \quad \Delta A=0.0987 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.10
+$$
+\quad 求得时间的平均测量值为
+\textcolor{green!60!black}{
+$$
+t=(t \pm U)=(29.13\pm 0.10)s
+$$}
+速度 \textcolor{green!30!black}{
+$$
+v_0=\frac{L}{\bar{t}}=\frac{0.1}{29.13}=3.43\times 10^{-3} m/s
+$$}
+粘度$\eta$ \textcolor{red!30!blue}{
+$$
+\eta=\frac{(\rho-\rho_0)gd^2}{18v_0(1+2.4\frac{d}{D})}=1.026 Pa\cdot s
+$$}
+修正粘度$\eta_1$ \textcolor{red!30!blue}{
+$$
+\eta_1=\eta-\frac{3}{16}v_0d\rho_0=1.025 Pa\cdot s
+$$}
+
+\textcolor{blue!50!white}{21°C \quad t:[25.44,25.19,25.21,25.67,25.28]}
+$$
+\bar{N}=\frac{1}{5}(25.44+25.19+25.2+25.67+25.28)=25.36
+$$
+$$
+\sigma_N=0.200 \quad \sigma_{\bar{N}}=0.089 \quad \Delta A=0.23 \quad \Delta B=0.01 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.23
+$$
+\quad 求得时间的平均测量值为
+\textcolor{green!60!black}{
+$$
+t=(t \pm U)=(25.36\pm 0.23)s
+$$}
+速度 \textcolor{green!30!black}{
+$$
+v_0=\frac{L}{\bar{t}}=\frac{0.1}{25.36}=3.94\times 10^{-3} m/s
+$$}
+粘度$\eta$ \textcolor{red!30!blue}{
+$$
+\eta=\frac{(\rho-\rho_0)gd^2}{18v_0(1+2.4\frac{d}{D})}=0.893 Pa\cdot s
+$$}
+修正粘度$\eta_1$ \textcolor{red!30!blue}{
+$$
+\eta_1=\eta-\frac{3}{16}v_0d\rho_0=0.892 Pa\cdot s
+$$}
+
+\textcolor{blue!50!white}{23°C \quad t:[22.70,22.55,22.17,22.01,21.95]}
+$$
+\bar{N}=\frac{1}{5}(22.70+22.55+22.17+22.01+21.95)=22.28
+$$
+$$
+\sigma_N=0.332 \quad \sigma_{\bar{N}}=0.149 \quad \Delta A=0.38 \quad \Delta B=0.01 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.38
+$$
+\quad 求得时间的平均测量值为
+\textcolor{green!60!black}{
+$$
+t=(t \pm U)=(22.28\pm 0.38)s
+$$}
+速度 \textcolor{green!30!black}{
+$$
+v_0=\frac{L}{\bar{t}}=\frac{0.1}{22.28}=4.49\times 10^{-3} m/s
+$$}
+粘度$\eta$ \textcolor{red!30!blue}{
+$$
+\eta=\frac{(\rho-\rho_0)gd^2}{18v_0(1+2.4\frac{d}{D})}=0.783 Pa\cdot s
+$$}
+修正粘度$\eta_1$ \textcolor{red!30!blue}{
+$$
+\eta_1=\eta-\frac{3}{16}v_0d\rho_0=0.782 Pa\cdot s
+$$}
+
+\textcolor{blue!50!white}{25°C \quad t:[20.09,19.55,19.18,18.93,18.87]}
+$$
+\bar{N}=\frac{1}{5}(20.09+19.55+19.18+18.93+18.87)=19.32
+$$
+$$
+\sigma_N=0.505 \quad \sigma_{\bar{N}}=0.226 \quad \Delta A=0.58 \quad \Delta B=0.01 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.58
+$$
+\quad 求得时间的平均测量值为
+\textcolor{green!60!black}{
+$$
+t=(t \pm U)=(19.32\pm 0.58)s
+$$}
+速度 \textcolor{green!30!black}{
+$$
+v_0=\frac{L}{\bar{t}}=\frac{0.1}{19.32}=5.12\times 10^{-3} m/s
+$$}
+粘度$\eta$ \textcolor{red!30!blue}{
+$$
+\eta=\frac{(\rho-\rho_0)gd^2}{18v_0(1+2.4\frac{d}{D})}=0.687 Pa\cdot s
+$$}
+修正粘度$\eta_1$ \textcolor{red!30!blue}{
+$$
+\eta_1=\eta-\frac{3}{16}v_0d\rho_0=0.686 Pa\cdot s
+$$}
+
+\textcolor{blue!50!white}{27°C \quad t:[17.08,16.66,17.05,16.60,16.33]}
+$$
+\bar{N}=\frac{1}{5}(17.08+16.66+17.05+16.60+16.33)=16.74
+$$
+$$
+\sigma_N=0.318 \quad \sigma_{\bar{N}}=0.142 \quad \Delta A=0.36 \quad \Delta B=0.01 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.36
+$$
+\quad 求得时间的平均测量值为
+\textcolor{green!60!black}{
+$$
+t=(t \pm U)=(16.74\pm 0.36)s
+$$}
+速度 \textcolor{green!30!black}{
+$$
+v_0=\frac{L}{\bar{t}}=\frac{0.1}{16.74}=5.97\times 10^{-3} m/s
+$$}
+粘度$\eta$ \textcolor{red!30!blue}{
+$$
+\eta=\frac{(\rho-\rho_0)gd^2}{18v_0(1+2.4\frac{d}{D})}=0.589 Pa\cdot s
+$$}
+修正粘度$\eta_1$ \textcolor{red!30!blue}{
+$$
+\eta_1=\eta-\frac{3}{16}v_0d\rho_0=0.588 Pa\cdot s
+$$}
+
+\textcolor{blue!50!white}{29°C \quad t:[15.03,14.96,14.44,14.09,14.08]}
+$$
+\bar{N}=\frac{1}{5}(15.03+14.96+14.44+14.09+14.08)=14.52
+$$
+$$
+\sigma_N=0.458 \quad \sigma_{\bar{N}}=0.205 \quad \Delta A=0.52 \quad \Delta B=0.01 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.52
+$$
+\quad 求得时间的平均测量值为
+\textcolor{green!60!black}{
+$$
+t=(t \pm U)=(14.52\pm 0.52)s
+$$}
+速度 \textcolor{green!30!black}{
+$$
+v_0=\frac{L}{\bar{t}}=\frac{0.1}{14.52}=6.88\times 10^{-3} m/s
+$$}
+粘度$\eta$ \textcolor{red!30!blue}{
+$$
+\eta=\frac{(\rho-\rho_0)gd^2}{18v_0(1+2.4\frac{d}{D})}=0.511 Pa\cdot s
+$$}
+修正粘度$\eta_1$ \textcolor{red!30!blue}{
+$$
+\eta_1=\eta-\frac{3}{16}v_0d\rho_0=0.510 Pa\cdot s
+$$}
+
+
+\large \textbf{\textcolor{blue}{Part3：图像拟合}}\\
+\textcolor{green!70!black}{η-T表格，图像如下}
+
+\textcolor{red!30!blue}{
+分析可知蓖麻油粘度随温度的升高而降低，且近似成指数关系(拟合方程已在图中标出)
+}
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+
+%==========================================================换页==============================
+\clearpage
+\begin{homeworkProblem}[4]
+
+\begin{enumerate}
+	% alignment
+	\item
+
+
+{\Large \textbf{\textcolor{red}{计算公式}}}
+
+\vspace{\baselineskip}
+
+1.算术平均值\quad 
+\textcolor{purple}{
+$$\bar{N} =\frac{\sum_{i=1}^nN_i}{n}$$
+}
+2.测量值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_N=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n-1}}$$
+}
+3.平均值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_{\bar{N}}=\frac{\sigma_N}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n(n-1)}}$$
+}
+4.粗差的剔除\quad 拉依达准则 \quad 
+\textcolor{purple}{
+$$\left| \Delta N_i \right|<3\sigma_N$$
+}
+5.不确定度\quad 
+\textcolor{purple}{
+$$U=\sqrt{\Delta_A^2+\Delta_B^2}$$
+}
+
+\vspace{\baselineskip}
+\large \textbf{\textcolor{blue}{Part1：圆环外径D1与D2的测定}}\\
+$D_1$：[35.04,35.06,35.06,35.02,35.04]\quad 单位：$\times 10^{-3}m$
+$$
+\bar{N}=\frac{1}{5}(35.04+35.06+35.06+35.02+35.04)=35.04
+$$
+$$
+\sigma_N=0.017 \quad \sigma_{\bar{N}}=0.007 \quad \Delta A=0.019 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.02
+$$
+\quad 求得圆环外径$D_1$的平均测量值为
+\textcolor{green!70!black}{
+$$
+D_1=(D_1 \pm U)=(35.04\pm 0.02) \times 10^{-3}m
+$$}
+
+$D_2$：[33.02,33.02,33.00,33.02,33.00]\quad 单位：$\times 10^{-3}m$
+$$
+\bar{N}=\frac{1}{5}(33.02+33.02+33.00+33.02+33.00)=33.01
+$$
+$$
+\sigma_N=0.011 \quad \sigma_{\bar{N}}=0.005 \quad \Delta A=0.013 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.02
+$$
+\quad 求得圆环内径$D_2$的平均测量值为
+\textcolor{green!70!black}{
+$$
+D_2=(D_2 \pm U)=(33.01\pm 0.02) \times 10^{-3}m
+$$}
+%\textcolor{green!70!black}{①通过添加砝码作出的F-Δy图像如下}\\
+
+
+\large \textbf{\textcolor{blue}{Part2：图像拟合 U=Bf}}\\
+\textcolor{green!70!black}{U-f拟合直线，图像如下}
+
+
+%\textcolor{red!30!blue}{
+%B=3.00
+%}
+
+
+
+
+\large \textbf{\textcolor{blue}{Part3：求解水的表面张力系数}}\\
+\textcolor{blue!50!white}{ΔU \quad ΔU:[39.8,39.5,40.6,38.2,40.7,41.0]} 单位：$\times 10^{-3} V$
+$$
+\bar{N}=\frac{1}{6}(39.8+39.5+40.6+38.2+40.7+41.0)=40.0
+$$
+$$
+\sigma_N=1.036 \quad \sigma_{\bar{N}}=0.423 \quad \Delta A=1.088 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=1.1
+$$
+\quad 求得ΔU的平均测量值为
+\textcolor{green!60!black}{
+$$
+\Delta U=(\Delta U\pm U)=(40.0\pm 1.1) \times 10^{-3}V
+$$}
+表面张力 \textcolor{green!30!black}{
+$$
+f=(U_1-U_2)/B=\frac{\Delta U}{B}=13.3\times 10^{-3}N
+$$}
+表面张力系数$\alpha$ \textcolor{red!30!blue}{
+$$
+\alpha=\frac{f}{\pi(D_1+D_2)}=0.062N/m
+$$}
+
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+%==========================================================换页==============================
+\clearpage
+\begin{homeworkProblem}[5]
+
+\begin{enumerate}
+	% alignment
+	\item
+
+{\Large \textbf{\textcolor{red}{计算公式}}}
+
+\vspace{\baselineskip}
+
+1.算术平均值\quad 
+\textcolor{purple}{
+$$\bar{N} =\frac{\sum_{i=1}^nN_i}{n}$$
+}
+2.测量值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_N=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n-1}}$$
+}
+3.平均值的标准偏差\quad
+\textcolor{purple}{
+$$\sigma_{\bar{N}}=\frac{\sigma_N}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^n(N_i-\bar{N})^2}{n(n-1)}}$$
+}
+4.粗差的剔除\quad 拉依达准则 \quad 
+\textcolor{purple}{
+$$\left| \Delta N_i \right|<3\sigma_N$$
+}
+5.不确定度\quad 
+\textcolor{purple}{
+$$U=\sqrt{\Delta_A^2+\Delta_B^2}$$
+}
+
+\vspace{\baselineskip}
+\large \textbf{\textcolor{blue}{Part1：已知量的测量}}\\
+\textcolor{blue!50!white}{砝码质量\quad$m$：[39.2,39.2,39.2,39.1,39.2,39.2]\quad 单位：$\times 10^{-3}kg$}
+$$
+\bar{N}=\frac{1}{6} (39.2 + 39.2 + 39.2 + 39.1 + 39.2 + 39.2)=39.2
+$$
+$$
+\sigma_N=0.04 \quad \sigma_{\bar{N}}=0.017 \quad \Delta A=0.043 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.044
+$$
+\quad 求得砝码质量$m$的平均测量值为
+\textcolor{green!70!black}{
+$$
+m=(m \pm U)=(39.2\pm 0.0) \times 10^{-3}kg
+$$}
+
+\textcolor{blue!50!white}{圆环样品质量\quad$M_{\text{环}}$：[426.5,426.5,426.5,426.5,426.5,426.5]\quad 单位：$\times 10^{-3}kg$}
+$$
+\bar{N}=\frac{1}{6} (426.5 + 426.5 + 426.5 + 426.5 + 426.5 + 426.5)=462.5
+$$
+$$
+\sigma_N=0.0 \quad \sigma_{\bar{N}}=0.0 \quad \Delta A=0.0 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.0095
+$$
+\quad 求得圆环样品质量$M_{\text{环}}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+M_{\text{环}}=(M_{\text{环}} \pm U)=(462.5\pm 0.0) \times 10^{-3}kg
+$$}
+
+\textcolor{blue!50!white}{圆环外径\quad$D_{\text{外}}$：[239.42,239.40,239.42,239.40,239.42,239.40]\quad 单位：$\times 10^{-3}m$}
+$$
+\bar{N}=\frac{1}{6} (239.42 + 239.40 + 239.42 + 239.40 + 239.42 + 239.40)=239.41
+$$
+$$
+\sigma_N=0.011 \quad \sigma_{\bar{N}}=0.004 \quad \Delta A=0.011 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.01
+$$
+\quad 求得圆环外径$D_{\text{外}}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+D_{\text{外}}=(D_{\text{外}} \pm U)=(239.41\pm 0.01) \times 10^{-3}m
+$$}
+
+\textcolor{blue!50!white}{圆环内径\quad$D_{\text{内}}$：[210.40,210.38,210.38,210.40,210.38,210.38]\quad 单位：$\times 10^{-3}m$}
+$$
+\bar{N}=\frac{1}{6} (210.40 + 210.38 + 210.38 + 210.40 + 210.38 + 210.38)=210.39
+$$
+$$
+\sigma_N=0.010 \quad \sigma_{\bar{N}}=0.004 \quad \Delta A=0.011 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.01
+$$
+\quad 求得圆环内径$D_{\text{外}}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+D_{\text{内}}=(D_{\text{内}} \pm U)=(210.39\pm 0.01) \times 10^{-3}m
+$$}
+
+
+
+
+
+\textcolor{blue!50!white}{圆柱1质量\quad$M_{\text{柱1}}$：[165.4,165.4,165.4,165.4,165.4,165.4]\quad 单位：$\times 10^{-3}kg$}
+$$
+\bar{N}=\frac{1}{6} (165.4 + 165.4 + 165.4 + 165.4 + 165.4 + 165.4)=165.4
+$$
+$$
+\sigma_N=0.0 \quad \sigma_{\bar{N}}=0.0 \quad \Delta A=0.0 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.0
+$$
+\quad 求得圆柱1质量$M_{\text{柱1}}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+M_{\text{柱1}}=(M_{\text{柱1}} \pm U)=(165.4\pm 0.0) \times 10^{-3}kg
+$$}
+
+\textcolor{blue!50!white}{圆柱2质量\quad$M_{\text{柱2}}$：[164.8,164.7,164.7,164.7,164.8,164.8]\quad 单位：$\times 10^{-3}kg$}
+$$
+\bar{N}=\frac{1}{6} (164.8 + 164.7 + 164.7 + 164.7 + 164.8 + 164.8)=164.8
+$$
+$$
+\sigma_N=0.055 \quad \sigma_{\bar{N}}=0.022 \quad \Delta A=0.057 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.01
+$$
+\quad 求得圆柱2质量$M_{\text{柱2}}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+M_{\text{柱2}}=(M_{\text{柱2}} \pm U)=(164.8\pm 0.1) \times 10^{-3}kg
+$$}
+
+\textcolor{blue!50!white}{圆柱1直径\quad$D_{\text{柱1}}$：[30.02,30.02,30.00,30.02,30.00,30.00]\quad 单位：$\times 10^{-3}m$}
+$$
+\bar{N}=\frac{1}{6} (30.02 + 30.02 + 30.00 + 30.02 + 30.00 + 30.00)=30.01
+$$
+$$
+\sigma_N=0.010 \quad \sigma_{\bar{N}}=0.004 \quad \Delta A=0.011 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.01
+$$
+\quad 求得圆柱1直径$D_{\text{柱1}}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+D_{\text{柱1}}=(D_{\text{柱1}} \pm U)=(30.01\pm 0.01) \times 10^{-3}m
+$$}
+
+\textcolor{blue!50!white}{圆柱2直径\quad$D_{\text{柱2}}$：[30.00,30.00,29.98,30.00,29.98,30.00]\quad 单位：$\times 10^{-3}m$}
+$$
+\bar{N}=\frac{1}{6} (30.00 + 30.00 + 29.98 + 30.00 + 29.98 + 30.00)=29.99
+$$
+$$
+\sigma_N=0.010 \quad \sigma_{\bar{N}}=0.004 \quad \Delta A=0.011 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.01
+$$
+\quad 求得圆柱2径$D_{\text{柱2}}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+D_{\text{柱2}}=(D_{\text{柱2}} \pm U)=(29.99\pm 0.01) \times 10^{-3}m
+$$}
+
+
+%\textcolor{green!70!black}{①通过添加砝码作出的F-Δy图像如下}\\
+
+
+\large \textbf{\textcolor{blue}{Part2：β的测量}}\\
+
+\textcolor{blue!50!white}{角加速度\quad$\beta_{1}$：[-0.0529, -0.0694, -0.0597, -0.0657, -0.0604, -0.0632, -0.0589, -0.0611, -0.0581]\quad 单位：$rad/s^2$}
+$$
+\bar{N}=\frac{1}{9}  (-0.0529 + -0.0694 + -0.0597 + -0.0657 + -0.0604 + -0.0632 + -0.0589 + -0.0611 + -0.0581)=-0.0610
+$$
+$$
+\sigma_N=0.0047 \quad \sigma_{\bar{N}}=0.0016 \quad \Delta A=0.004 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.0103
+$$
+\quad 求得角加速度$\beta_{1}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+\beta_{1}=(\beta \pm U)=(-0.0610\pm 0.0103) rad/s^2
+$$}
+
+\textcolor{blue!50!white}{角加速度\quad$\beta_{2}$：[1.6854, 1.6628, 1.6745, 1.6565, 1.6635, 1.6448, 1.6544, 1.4753, 1.2807]\quad 单位：$rad/s^2$}
+$$
+\bar{N}=\frac{1}{9}  (1.6854 + 1.6628 + 1.6745 + 1.6565 + 1.6635 + 1.6448 + 1.6544 + 1.4753 + 1.2807)=1.5998
+$$
+$$
+\sigma_N=0.1353 \quad \sigma_{\bar{N}}=0.0451 \quad \Delta A=0.1159 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.1163
+$$
+\quad 求得角加速度$\beta_{2}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+\beta_{2}=(\beta \pm U)=(1.5998\pm 0.1163) rad/s^2
+$$}
+
+\textcolor{blue!50!white}{角加速度\quad$\beta_{3}$：[-0.0503, -0.0330, -0.0405, -0.0335, -0.0378, -0.0337, -0.0364, -0.0336, -0.0357]\quad 单位：$rad/s^2$}
+$$
+\bar{N}=\frac{1}{9} (-0.0503 + -0.0330 + -0.0405 + -0.0335 + -0.0378 + -0.0337 + -0.0364 + -0.0336 + -0.0357)=-0.0372
+$$
+$$
+\sigma_N=0.0055 \quad \sigma_{\bar{N}}=0.0018 \quad \Delta A=0.005 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.0106
+$$
+\quad 求得角加速度$\beta_{3}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+\beta_{3}=(\beta \pm U)=(-0.0372\pm 0.0106) rad/s^2
+$$}
+
+
+
+
+
+\textcolor{blue!50!white}{角加速度\quad$\beta_{4}$：[0.9013, 0.8893, 0.8956, 0.8853, 0.8920, 0.8816, 0.8844, 0.7790, 0.6756]\quad 单位：$rad/s^2$}
+$$
+\bar{N}=\frac{1}{9} (0.9013 + 0.8893 + 0.8956 + 0.8853 + 0.8920 + 0.8816 + 0.8844 + 0.7790 + 0.6756)=0.8538
+$$
+$$
+\sigma_N=0.0765 \quad \sigma_{\bar{N}}=0.0255 \quad \Delta A=0.066 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.0662
+$$
+\quad 求得角加速度$\beta_{4}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+\beta_{4}=(\beta \pm U)=(0.8538\pm 0.0103) rad/s^2
+$$}
+
+\textcolor{blue!50!white}{角加速度\quad$\beta_{5}$：[-0.0312, -0.0369, -0.0325, -0.0345, -0.0322, -0.0344, -0.0336, -0.0340, -0.0324]\quad 单位：$rad/s^2$}
+$$
+\bar{N}=\frac{1}{9}  (-0.0312 + -0.0369 + -0.0325 + -0.0345 + -0.0322 + -0.0344 + -0.0336 + -0.0340 + -0.0324)=-0.0335
+$$
+$$
+\sigma_N=0.0017 \quad \sigma_{\bar{N}}=0.0006 \quad \Delta A=0.014 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.0096
+$$
+\quad 求得角加速度$\beta_{5}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+\beta_{5}=(\beta \pm U)=(-0.0335\pm 0.0096) rad/s^2
+$$}
+
+\textcolor{blue!50!white}{角加速度\quad$\beta_{6}$：[1.0379, 1.0482, 1.0332, 1.0420, 1.0301, 1.0379, 1.0275, 1.0275, 0.9108]\quad 单位：$rad/s^2$}
+$$
+\bar{N}=\frac{1}{9} (1.0379 + 1.0482 + 1.0332 + 1.0420 + 1.0301 + 1.0379 + 1.0275 + 1.0275 + 0.9108)=1.0217
+$$
+$$
+\sigma_N=0.0042 \quad \sigma_{\bar{N}}=0.0140 \quad \Delta A=0.0361 \quad \Delta B=0.0095 \quad U=\sqrt{\Delta A^2+\Delta B^2}=0.0373
+$$
+\quad 求得角加速度$\beta_{6}$的平均测量值为
+\textcolor{green!70!black}{
+$$
+\beta_{6}=(\beta \pm U)=(1.0217\pm 0.0373) rad/s^2
+$$}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\large \textbf{\textcolor{blue}{Part3：测量并计算放上圆环后的转动惯量并于理论值比较}}\\
+\textcolor{blue!50!white}{
+放上圆环后的转动惯量的实验值，由计算公式
+}
+\begin{equation*}
+    J_1 = \frac{Rm(g - R\beta_2)}{\beta_2 - \beta_1}
+\end{equation*}
+\begin{equation*}
+    J_2 = \frac{Rm(g - R\beta_4)}{\beta_4 - \beta_3}
+\end{equation*}
+\begin{equation*}
+    J_3 = J_2 - J_1
+\end{equation*}
+可得
+
+\textcolor{green!60!black}{
+$$
+J_1=0.0069 \quad J_2=0.0129\quad J_3=0.0060
+$$}
+
+\textcolor{blue!50!white}{
+放上圆环后的理论计算值，由公式
+}
+\begin{equation*}
+    J=\frac{m}{2}(R_{\text{外}}^2+R_{\text{内}}^2)
+\end{equation*}
+可得
+\textcolor{green!60!black}{
+$$
+J=0.0054
+$$}
+
+相对误差 \textcolor{green!30!black}{
+$$
+E=\frac{J_3-J}{J}\times 100\%=10\%
+$$}
+
+
+
+
+
+\large \textbf{\textcolor{blue}{Part4：验证平行轴定理}}\\
+\textcolor{blue!50!white}{
+两圆柱体的转动惯量在与中心距离为d的实验值，由计算公式
+}
+\begin{equation*}
+    J_1 = \frac{Rm(g - R\beta_2)}{\beta_2 - \beta_1}
+\end{equation*}
+\begin{equation*}
+    J_2 = \frac{Rm(g - R\beta_6)}{\beta_6 - \beta_5}
+\end{equation*}
+\begin{equation*}
+    J_3 = J_2 - J_1
+\end{equation*}
+可得
+
+\textcolor{green!60!black}{
+$$
+J_1=0.0069 \quad J_2=0.0109\quad J_3=0.0040
+$$}
+
+\textcolor{blue!50!white}{
+依据平行轴定理得出转动惯量的理论计算值，由公式
+}
+\begin{equation*}
+    J_0=\frac{m_1}{2}R_1^2+\frac{m_2}{2}R_2^2=\frac{1}{2}\times 0.1654 \times (0.0150)^2+\frac{1}{2}\times 0.1648 \times (0.0150)^2=3.7147\times 10^{-5}
+\end{equation*}
+\begin{equation*}
+(m_1+m_2)d^2=(0.1654+0.1648)\times 0.1125=0.0042
+\end{equation*}
+即
+\textcolor{green!60!black}{
+$$
+J=J_0+md^2=0.0042
+$$}
+
+相对误差 \textcolor{green!30!black}{
+$$
+E=\frac{J_3-J}{J}\times 100\%=4.8\%
+$$}
+
+
+\large \textbf{\textcolor{blue}{Part5：思考与讨论}}\\
+1.游标卡尺的一对内外测量爪之间均有缝隙，测量圆柱半径时注意减去相应距离\\
+2.使用电子天平称重时应注意仪器的精度范围，从而确保实验数据的准确性\\
+3.选择的悬挂砝码的细线应足够长以确保能收集到足够多的数据\\
+4.实验过程应确保仪器水平放置，以减小重力等其它无关因素对实验的影响
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+%==========================================================换页==============================
+\clearpage
+\begin{homeworkProblem}[6]
+
+\begin{enumerate}
+	% alignment
+	\item
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
