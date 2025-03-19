@@ -8,6 +8,10 @@
 
 *Final Grade : A*
 
+---
+> *Preface: For more course materials, please refer to my [Archive](https://github.com/Rankyer/Archive)📚. This repository contains a categorized summary of all my course materials from ShanghaiTech 🙌 (**for reference only**). If you have any questions, feel free to contact me at: 📧 **Email**: [yangrk2022@shanghaitech.edu.cn](mailto:yangrk2022@shanghaitech.edu.cn)*
+---
+
 **普物实验报告 Latex 版（基于概率论 latex 模板）**：
 + 固体密度的测量
 + 弹簧谐振子的研究
